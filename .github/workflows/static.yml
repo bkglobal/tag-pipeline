@@ -3,9 +3,7 @@ name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
-  push:
-    tags:
-    - v1.*
+  create:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -22,6 +20,7 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   testdeploy:
+    if: ${{ startsWith(github.ref, 'refs/tags/prod-v') }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
